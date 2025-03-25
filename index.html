@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stâna Mea</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome pentru iconițe -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0e8d9;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Bara de navigare */
+        .navbar {
+            padding: 1.5rem 2rem;
+            background-color: #4a2c0d;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: #e8b923;
+            transition: transform 0.3s;
+        }
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+        .nav-link {
+            font-weight: 600;
+            color: #fff !important;
+            margin-right: 1rem;
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #e8b923 !important;
+        }
+        .btn-primary {
+            background-color: #e8b923;
+            border: none;
+            border-radius: 10px;
+            padding: 0.6rem 2rem;
+            font-weight: 600;
+            color: #4a2c0d;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #d9a413;
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #4a2c0d 0%, #6b4513 100%);
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in;
+            text-align: center;
+            color: #fff;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+            opacity: 0.2;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .hero p {
+            font-size: 1.4rem;
+            opacity: 0.9;
+        }
+        .hero .btn-light {
+            border-radius: 10px;
+            padding: 1rem 2rem;
+            font-weight: 700;
+            background-color: #e8b923;
+            color: #4a2c0d;
+            border: none;
+            transition: all 0.3s;
+        }
+        .hero .btn-light:hover {
+            background-color: #d9a413;
+            transform: scale(1.1);
+        }
+
+        /* Galerie Foto */
+        .gallery-section {
+            padding: 5rem 0;
+            background: linear-gradient(to bottom, #f0e8d9 0%, #e0d5b8 100%);
+        }
+        .gallery-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            color: #4a2c0d;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.4s, box-shadow 0.4s;
+            background-color: #fff;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 4px solid #e8b923;
+            transition: transform 0.3s;
+        }
+        .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4a2c0d;
+        }
+        .card-text {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .gallery-thumbnails {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        .gallery-thumbnails img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .gallery-thumbnails img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        .lightbox.active {
+            display: flex;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #4a2c0d 0%, #6b4513 100%);
+            padding: 2rem 0;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        footer p {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        footer a {
+            color: #e8b923;
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: transform 0.3s;
+        }
+        footer a:hover {
+            transform: scale(1.1);
+            color: #d9a413;
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+            opacity: 0.2;
+        }
+
+        /* Animații */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bara de navigare -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Stâna Mea</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Acasă</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Oi de vânzare</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Capre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Despre stână</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Bine ai venit la Stâna Mea!</h1>
+            <p>Oi și capre de vânzare, direct de la stână. Calitate garantată!</p>
+            <a href="#" class="btn btn-light btn-lg">Vezi oferta</a>
+        </div>
+    </section>
+
+    <!-- Secțiunea de galerie foto -->
+    <section class="gallery-section container">
+        <h2>Oi și Stâna Mea</h2>
+        <div class="row">
+            <!-- Oi 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="https://www.goodheartanimalsanctuaries.com/wp-content/uploads/2020/05/Woolly-Sheep.jpg" class="card-img-top" alt="Oi 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Oi de rasă</h5>
+                        <p class="card-text">Oi sănătoase, crescute la stână, perfecte pentru lapte și lână.</p>
+                        <div class="gallery-thumbnails">
+                            <img src="https://www.hertz.is/media/sites/3/2023/07/two-icelandic-sheeps-1024x683.jpg" alt="Oi 1">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Sheep_eating_grass_edit02.jpg" alt="Oi 1">
+                            <img src="https://smesouthafrica.co.za/wp-content/uploads/2023/10/sheep-farming-in-south-africa-how-to-get-started.jpg" alt="Oi 1">
+                        </div>
+                        <a href="#" class="btn btn-primary">Detalii</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oi 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="https://cdn.britannica.com/39/95439-050-78B87F34/Adult-sheep-lambs.jpg" class="card-img-top" alt="Oi 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Miei de primăvară</h5>
+                        <p class="card-text">Miei tineri, gata pentru vânzare, crescuți natural.</p>
+                        <div class="gallery-thumbnails">
+                            <img src="https://hudsonvalley.org/wp-content/uploads/sheep-1-870x489.jpg" alt="Oi 2">
+                            <img src="https://www.vff.org.au/wp-content/uploads/2018/03/vff-blog-images-sheep-and-lamb-2.jpg" alt="Oi 2">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Oveja_islandesa%2C_Gr%C3%A1br%C3%B3k%2C_Vesturland%2C_Islandia%2C_2014-08-15%2C_DD_097_%28cropped%29.JPG/1200px-Oveja_islandesa%2C_Gr%C3%A1br%C3%B3k%2C_Vesturland%2C_Islandia%2C_2014-08-15%2C_DD_097_%28cropped%29.JPG" alt="Oi 2">
+                        </div>
+                        <a href="#" class="btn btn-primary">Detalii</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stâna -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="https://www.heyiceland.is/asset/29362/icelandic-sheep-portrait" class="card-img-top" alt="Stâna">
+                    <div class="card-body">
+                        <h5 class="card-title">Stâna mea</h5>
+                        <p class="card-text">Aici cresc oile și caprele mele, în mijlocul naturii.</p>
+                        <div class="gallery-thumbnails">
+                            <img src="https://www.campervaniceland.com/assets/img/blog/354.png" alt="Stâna">
+                            <img src="https://nat.is/wp-content/uploads/2017/06/sheep.jpg" alt="Stâna">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Icelandic_sheep.jpg" alt="Stâna">
+                        </div>
+                        <a href="#" class="btn btn-primary">Detalii</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Capre -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="https://static.wikia.nocookie.net/animals/images/b/ba/Sheep.jpg/revision/latest/scale-to-width-down/1200?cb=20190209033122" class="card-img-top" alt="Capre">
+                    <div class="card-body">
+                        <h5 class="card-title">Capre de lapte</h5>
+                        <p class="card-text">Capre productive, ideale pentru brânză și lapte proaspăt.</p>
+                        <div class="gallery-thumbnails">
+                            <img src="https://ogden_images.s3.amazonaws.com/www.iamcountryside.com/images/sites/1/2019/03/19114221/how-to-raise-sheep.jpg" alt="Capre">
+                            <img src="https://d27p2a3djqwgnt.cloudfront.net/wp-content/uploads/2024/10/03115238/sheep.jpg" alt="Capre">
+                            <img src="https://veganfta.com/wp-content/uploads/2023/09/shutterstock_104360954-1.jpg" alt="Capre">
+                        </div>
+                        <a href="#" class="btn btn-primary">Detalii</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <img src="" alt="Imagine mărită" id="lightbox-img">
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2025 Stâna Mea. Toate drepturile rezervate.</p>
+            <div class="mt-3">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Lightbox functionality
+        const thumbnails = document.querySelectorAll('.gallery-thumbnails img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', () => {
+                lightboxImg.src = thumbnail.src;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
